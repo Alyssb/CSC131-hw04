@@ -31,13 +31,23 @@ int main(int argc, char* argv[])
 
 std::string convertToMilitaryTime(std::string st)
 {
-    int space, colon, hour, min;
+    int space{};
+    int colon{};
+    //int hour{};
+    int min{};
     colon = st.find(':');
     space = st.find(' ');
-    hour = std::stoi(st.substr(0,colon));
-    min = std::stoi(st.substr(colon,space));
-
-
-    return "";
+    std::string hour{};
+    hour = st.substr(0,colon);
+    //min = std::stoi(st.substr(colon,space));
+    //std::string ap = st.substr(space);
+    //std::string final{};
+    //if (ap.find('p')!=std::string::npos)
+        //hour = hour + 12;
+        //final = "pm";
+    //else
+        //final = "am";
+    std::cout << space << std::endl;
+    return hour;
 
 }
