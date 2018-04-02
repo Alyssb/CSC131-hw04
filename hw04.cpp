@@ -10,8 +10,19 @@
 #include <iostream>
 #include <string>
 
+/**
+ * takes an inputted time and calculates the military format of said time
+ * @param st the inputted time (format hh:mm xm)
+ * @return military time is returned (format hhmm)
+ */
 std::string convertToMilitaryTime(std::string);
 
+/**
+ * entry point of this application
+ * @param argc pretty sure this is for use by the tester (int)
+ * @param argv also probably for use by tester (char list(?))
+ * @return EXIT_SUCCESS is returned upon successful execution of this application
+ */
 int main(int argc, char* argv[])
 {
     std::cout << "what time is it?? ";
@@ -31,23 +42,36 @@ int main(int argc, char* argv[])
 
 std::string convertToMilitaryTime(std::string st)
 {
-    int space{};
-    int colon{};
-    //int hour{};
-    int min{};
-    colon = st.find(':');
-    space = st.find(' ');
-    std::string hour{};
-    hour = st.substr(0,colon);
-    //min = std::stoi(st.substr(colon,space));
-    //std::string ap = st.substr(space);
-    //std::string final{};
-    //if (ap.find('p')!=std::string::npos)
-        //hour = hour + 12;
-        //final = "pm";
-    //else
-        //final = "am";
-    std::cout << space << std::endl;
-    return hour;
+    int hour{};
+    std::string miltime{};
+
+    hour = std::stoi(st.substr(0,st.find(':')));
+    std::string min = st.substr(st.find(':')+1,st.find(' ')-2);
+
+    if (min.at(min.length()-1)==' ')
+        min = min.substr(0,min.length()-1);
+
+    if (hour == 12)
+    {
+        if (st.at(6) == 'p' || st.at(6) == 'P')
+            miltime = std::to_string(hour) + min;
+        else
+            miltime = "00" + min;
+    }
+    else if (st.find('p') != std::string::npos || st.find('P') != std::string::npos)
+    {
+        hour = hour + 12;
+        std::cout << hour << std::endl;
+        miltime = std::to_string(hour) + min;
+    }
+    else
+    {
+        if (hour < 10)
+            miltime = "0" + std::to_string(hour) + min;
+        else
+            miltime = std::to_string(hour) + min;
+    }
+
+    return miltime;
 
 }
