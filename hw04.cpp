@@ -12,6 +12,7 @@
 
 /**
  * takes an inputted time and calculates the military format of said time
+ * relies on time being formatted correctly (see next line)
  * @param st the inputted time (format hh:mm xm)
  * @return military time is returned (format hhmm)
  */
@@ -48,9 +49,11 @@ std::string convertToMilitaryTime(std::string st)
     hour = std::stoi(st.substr(0,st.find(':')));
     std::string min = st.substr(st.find(':')+1,st.find(' ')-2);
 
+    //value of min changed based on length of st. This makes all min the same
     if (min.at(min.length()-1)==' ')
         min = min.substr(0,min.length()-1);
 
+    //calculates military time for 12:XX pm and 12:XX am
     if (hour == 12)
     {
         if (st.at(6) == 'p' || st.at(6) == 'P')
@@ -58,12 +61,14 @@ std::string convertToMilitaryTime(std::string st)
         else
             miltime = "00" + min;
     }
+    //calculates military time for pm times
     else if (st.find('p') != std::string::npos || st.find('P') != std::string::npos)
     {
         hour = hour + 12;
         std::cout << hour << std::endl;
         miltime = std::to_string(hour) + min;
     }
+    //calculates military time for am times
     else
     {
         if (hour < 10)
